@@ -1,24 +1,33 @@
 import 'package:filmseview/src/providers/movies_provider.dart';
+import 'package:filmseview/src/search/search_delegate.dart';
 import 'package:filmseview/src/widgets/card_swiper.dart';
 import 'package:filmseview/src/widgets/movie_horizontal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class HomePage extends StatelessWidget {
 
   final moviesProvider = new MoviesProvider();
 
   @override
   Widget build(BuildContext context) {
-    moviesProvider.getMoviesPopulars();
-    moviesProvider.getMoviesTopRated();
+
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text('Movies'),
+        title: Text(
+          'movi3s',
+          style: GoogleFonts.muli(
+              textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 22.0),
+            ),
+        ),
         backgroundColor: Colors.blueGrey[800],
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: (){})
+          IconButton(icon: Icon(Icons.search), onPressed: (){
+              showSearch(context: context, delegate: DataSearch());
+          })
         ],
       ),
       body: Scaffold(
@@ -38,8 +47,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-
   Widget _getMostPopulates(BuildContext context) {
+    moviesProvider.getMoviesPopulars();
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.only(bottom: 20.0),
@@ -50,7 +59,12 @@ class HomePage extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             margin: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 10.0),
-            child:  Text('Most Populars', style: TextStyle(color: Colors.white)),
+            child:  Text(
+              'Most Populars',
+              style: GoogleFonts.muli(
+                textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+              ),
+            ),
           ),
           StreamBuilder(
             stream: moviesProvider.popularsStream,
@@ -76,8 +90,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-
   Widget _getTopRated(BuildContext context) {
+    moviesProvider.getMoviesTopRated();
     return Container(
       margin: EdgeInsets.only(bottom: 20.0),
       alignment: Alignment.center,
@@ -88,7 +102,12 @@ class HomePage extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             margin: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 10.0),
-            child:  Text('Top rated', style: TextStyle(color: Colors.white)),
+            child:  Text(
+              'Top rated',
+              style: GoogleFonts.muli(
+                textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+              ),
+            ),
           ),
           StreamBuilder(
             stream: moviesProvider.topStream,
@@ -108,7 +127,6 @@ class HomePage extends StatelessWidget {
               }
             }
           ),
-
         ],
       ),
     );

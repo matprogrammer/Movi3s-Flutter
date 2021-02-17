@@ -75,6 +75,13 @@ class Movie {
     return 'https://image.tmdb.org/t/p/w500/$posterPath';
   }
 
+  getBackgroundMovie() {
+    if (posterPath == null) {
+      return 'http://via.placeholder.com/3';
+    }
+    return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+  }
+
 }
 
 

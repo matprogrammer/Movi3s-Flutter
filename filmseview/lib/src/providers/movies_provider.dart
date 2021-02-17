@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:filmseview/src/models/actors_model.dart';
 import 'package:filmseview/src/models/movie_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,7 +14,8 @@ class MoviesProvider {
   String _language = 'en-EN';
 
   int _moviesPage = 0;
-  bool _loading = false;
+  bool _loadingPopulars = false;
+  bool _loadingTopRated = false;
 
   List<Movie> _populars = new List();
   List<Movie> _topRated = new List();
@@ -55,9 +57,9 @@ class MoviesProvider {
 
   Future<List<Movie>> getMoviesPopulars() async {
 
-    if (_loading) return [];
+    if (_loadingPopulars) return [];
 
-    _loading = true;
+    _loadingPopulars = true;
     _moviesPage++;
 
     final url = Uri.https(_url, '3/movie/now_playing', {
@@ -67,33 +69,64 @@ class MoviesProvider {
     });
 
    final resp = await _processResponse(url);
+
    _populars.addAll(resp);
    popularsSink(_populars);
 
-   _loading = false;
+   _loadingPopulars = false;
    return resp;
 
   }
 
     Future<List<Movie>> getMoviesTopRated() async {
 
-      if (_loading) return [];
+      if (_loadingTopRated) return [];
 
-      _loading = true;
+      _loadingTopRated = true;
       _moviesPage++;
 
-      final url = Uri.https(_url, '3/movie/top_rated', {
+      final url = Uri.https(_url, '3/movie/now_playing', {
         'api_key': _apiKey,
         'language': _language,
         'page': _moviesPage.toString(),
       });
 
-    final resp = await _processResponse(url);
-    _topRated.addAll(resp);
+    final data = await _processResponse(url);
+
+    _topRated.addAll(data);
     topSink(_topRated);
 
-      _loading = false;
-    return resp;
+    _loadingTopRated = false;
+    return data;
+
+  }
+
+
+  Future<List<Actor>> getCast(String moviId) async {
+
+    final url = Uri.https(_url, '3/movie/$moviId/credits', {
+      'api_key': _apiKey,
+      'language': _language,
+      'page': '1',
+    });
+
+    final data = await http.get(url);
+    final decodedData = json.decode(data.body);
+    final cast = new Cast.fromJsonList(decodedData['cast']);
+
+    return cast.actors;
+
+  }
+
+    Future<List<Movie>> searchMovie(String query) async {
+
+    final url = Uri.https(_url, '3/search/movie', {
+      'api_key': _apiKey,
+      'language': _language,
+      'query': query
+    });
+
+    return await _processResponse(url);
 
   }
 

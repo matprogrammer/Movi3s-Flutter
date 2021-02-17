@@ -1,6 +1,7 @@
 import 'package:filmseview/src/models/movie_model.dart';
 import 'package:filmseview/src/pages/movie_details_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class MovieHorizontal extends StatelessWidget {
@@ -41,22 +42,27 @@ class MovieHorizontal extends StatelessWidget {
       margin: EdgeInsets.only(right: 15.0),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: FadeInImage(
-              image: NetworkImage(
-                movie.getImageMovie(),
-              ),
-              placeholder: AssetImage('assets/img/no-image.jpg'),
-              fit: BoxFit.cover,
-              height: 150.0,
-            )
+          Hero(
+            tag: movie.id,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: FadeInImage(
+                image: NetworkImage(
+                  movie.getImageMovie(),
+                ),
+                placeholder: AssetImage('assets/img/no-image.jpg'),
+                fit: BoxFit.cover,
+                height: 150.0,
+              )
+            ),
           ),
           SizedBox(height: 5.0),
           Text(
             movie.title,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: Colors.white, fontSize: 10.0),
+            style: GoogleFonts.muli(
+              textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10.0),
+            ),
           )
         ],
       ),

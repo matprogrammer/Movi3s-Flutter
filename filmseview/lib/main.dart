@@ -1,4 +1,3 @@
-import 'package:filmseview/src/pages/movie_details_page.dart';
 import 'package:filmseview/src/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 
