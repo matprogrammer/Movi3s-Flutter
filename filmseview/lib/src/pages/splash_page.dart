@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'home_page.dart';
 
@@ -46,13 +47,12 @@ class SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
           gradient: LinearGradient(
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
-            colors: ([Colors.black, Colors.pink]),
+            colors: ([Colors.blueGrey[900], Colors.blueGrey[700]]),
           ),
         ),
         child: Center(
           child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [buildLogo(), buildLoadingAnimation()],
           ),
         ),
@@ -61,17 +61,20 @@ class SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   }
 
   Widget buildLogo() {
-    return Container(
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 40.0),
       child: Text(
-        "LOGO",
-        style: TextStyle(color: Colors.red),
+        'MOVI3S',
+        style: GoogleFonts.lato(
+          textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 60.0),
+        ),
       ),
     );
   }
 
   Widget buildLoadingAnimation() {
     return Container(
-      height: 150,
+      height: 100,
       child: Lottie.asset(
         'lottie/circular-loading.json',
         controller: _controller,

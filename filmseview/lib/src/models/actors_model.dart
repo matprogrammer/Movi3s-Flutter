@@ -1,7 +1,3 @@
-
-
-import 'package:flutter/material.dart';
-
 class Cast {
 
   List<Actor> actors = new List();

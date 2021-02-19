@@ -5,7 +5,7 @@ import 'package:filmseview/src/widgets/movie_horizontal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 class HomePage extends StatelessWidget {
 
   final moviesProvider = new MoviesProvider();
